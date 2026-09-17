@@ -1,0 +1,433 @@
+/* =====================================================
+   STUDENTS PLACEMENT PREDICTION SYSTEM
+   Premium Glassmorphism UI
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #080b14;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.14);
+    --text: #ffffff;
+    --muted: #a9b0c3;
+    --primary: #7c5cff;
+    --secondary: #00d4ff;
+    --success: #00e676;
+}
+
+/* ================= BODY ================= */
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 10% 20%, rgba(124, 92, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.20), transparent 30%),
+        var(--bg-dark);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 15px;
+    overflow-x: hidden;
+}
+
+/* ================= BACKGROUND GLOW ================= */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    animation: floatGlow 8s ease-in-out infinite alternate;
+}
+
+body::before {
+    background: rgba(124, 92, 255, 0.25);
+    top: -120px;
+    left: -120px;
+}
+
+body::after {
+    background: rgba(0, 212, 255, 0.18);
+    bottom: -120px;
+    right: -120px;
+    animation-delay: 2s;
+}
+
+@keyframes floatGlow {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(50px, 30px);
+    }
+}
+
+/* ================= MAIN CARD ================= */
+
+.container,
+.result-box {
+    width: 100%;
+    max-width: 520px;
+
+    padding: 38px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+
+    animation: cardAppear 0.8s ease;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ================= HEADING ================= */
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #9c8cff,
+        #00d4ff
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    margin-bottom: 10px;
+}
+
+.container > p {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+/* ================= FORM ================= */
+
+form {
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #dfe3f0;
+}
+
+/* ================= INPUTS ================= */
+
+input,
+select {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+
+    font-size: 14px;
+
+    transition: all 0.25s ease;
+}
+
+input::placeholder {
+    color: #777f94;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--secondary);
+
+    background: rgba(255, 255, 255, 0.09);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 212, 255, 0.10),
+        0 0 18px rgba(0, 212, 255, 0.12);
+
+    transform: translateY(-1px);
+}
+
+/* ================= SELECT ================= */
+
+select {
+    cursor: pointer;
+}
+
+select option {
+    background: #111522;
+    color: white;
+}
+
+/* ================= BUTTON ================= */
+
+button {
+    width: 100%;
+    height: 52px;
+
+    margin-top: 28px;
+
+    border: none;
+    border-radius: 13px;
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    box-shadow:
+        0 10px 25px rgba(124, 92, 255, 0.25);
+
+    transition: all 0.3s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 212, 255, 0.25);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* ================= RESULT PAGE ================= */
+
+.result-box {
+    text-align: center;
+}
+
+.result-box h1 {
+    margin-bottom: 25px;
+}
+
+.result-box h2 {
+    font-size: 24px;
+    margin: 15px 0;
+
+    color: var(--success);
+
+    text-shadow:
+        0 0 15px rgba(0, 230, 118, 0.3);
+}
+
+.result-box p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* ================= PERCENTAGE ================= */
+
+.percentage {
+    width: 170px;
+    height: 170px;
+
+    margin: 25px auto;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    background:
+        radial-gradient(circle, #101522 58%, transparent 59%),
+        conic-gradient(
+            var(--secondary),
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 0 35px rgba(0, 212, 255, 0.15);
+
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.12);
+    }
+
+    50% {
+        box-shadow: 0 0 45px rgba(124, 92, 255, 0.25);
+    }
+
+    100% {
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.12);
+    }
+}
+
+/* ================= LINK ================= */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080b14;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        var(--primary),
+        var(--secondary)
+    );
+
+    border-radius: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 18px 12px;
+        align-items: flex-start;
+    }
+
+    .container,
+    .result-box {
+        margin-top: 15px;
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input,
+    select {
+        height: 46px;
+    }
+
+    button {
+        height: 50px;
+    }
+
+    .percentage {
+        width: 145px;
+        height: 145px;
+        font-size: 27px;
+    }
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 380px) {
+
+    .container,
+    .result-box {
+        padding: 22px 16px;
+    }
+
+    h1 {
+        font-size: 21px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    input,
+    select {
+        font-size: 13px;
+    }
+}
