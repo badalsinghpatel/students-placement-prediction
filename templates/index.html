@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Placement Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 30px;
+
+            background: linear-gradient(
+                135deg,
+                #7c5cff,
+                #00d4ff
+            );
+
+            box-shadow:
+                0 10px 35px rgba(0, 212, 255, 0.2);
+        }
+
+        .brand h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #a9b0c3;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            margin-top: 25px;
+            margin-bottom: 5px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            color: #ffffff;
+        }
+
+        .section-description {
+            color: #858da2;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #737b91;
+            font-size: 12px;
+
+            pointer-events: none;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+
+            margin-top: 22px;
+        }
+
+        .feature {
+            padding: 12px 5px;
+
+            text-align: center;
+
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.04);
+
+            font-size: 10px;
+            color: #a9b0c3;
+        }
+
+        .feature strong {
+            display: block;
+
+            color: #ffffff;
+            font-size: 12px;
+
+            margin-bottom: 4px;
+        }
+
+        .predict-btn {
+            letter-spacing: 0.3px;
+        }
+
+        .footer {
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 10px;
+            color: #687086;
+        }
+
+        @media (max-width: 400px) {
+            .feature-row {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- BRAND -->
+    <div class="brand">
+
+        <div class="brand-icon">
+            🎓
+        </div>
+
+        <h1>AI Placement Predictor</h1>
+
+        <p class="subtitle">
+            Predict student placement outcomes using
+            academic performance and skill-based data.
+        </p>
+
+    </div>
+
+
+    <form action="/predict" method="POST">
+
+        <!-- ACADEMIC DETAILS -->
+
+        <div class="section-title">
+            📚 Academic Details
+        </div>
+
+        <div class="section-description">
+            Enter your academic performance
+        </div>
+
+
+        <label for="cgpa">
+            CGPA
+        </label>
+
+        <div class="input-wrapper">
+            <input
+                type="number"
+                id="cgpa"
+                name="cgpa"
+                min="0"
+                max="10"
+                step="0.1"
+                placeholder="e.g. 8.5"
+                required>
+
+            <span>/ 10</span>
+        </div>
+
+
+        <label for="tenth">
+            10th Percentage
+        </label>
+
+        <div class="input-wrapper">
+            <input
+                type="number"
+                id="tenth"
+                name="tenth"
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder="e.g. 85"
+                required>
+
+            <span>%</span>
+        </div>
+
+
+        <label for="twelfth">
+            12th Percentage
+        </label>
+
+        <div class="input-wrapper">
+            <input
+                type="number"
+                id="twelfth"
+                name="twelfth"
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder="e.g. 82"
+                required>
+
+            <span>%</span>
+        </div>
+
+
+        <label for="backlogs">
+            Number of Backlogs
+        </label>
+
+        <input
+            type="number"
+            id="backlogs"
+            name="backlogs"
+            min="0"
+            placeholder="e.g. 0"
+            required>
+
+
+        <!-- SKILLS -->
+
+        <div class="section-title">
+            💻 Skills & Experience
+        </div>
+
+        <div class="section-description">
+            Tell us about your practical skills
+        </div>
+
+
+        <label for="internship">
+            Internship Experience
+        </label>
+
+        <select id="internship" name="internship" required>
+
+            <option value="1">
+                ✓ Yes, I have internship experience
+            </option>
+
+            <option value="0">
+                No internship experience
+            </option>
+
+        </select>
+
+
+        <label for="projects">
+            Number of Projects
+        </label>
+
+        <input
+            type="number"
+            id="projects"
+            name="projects"
+            min="0"
+            placeholder="e.g. 3"
+            required>
+
+
+        <label for="communication">
+            Communication Skill
+        </label>
+
+        <div class="input-wrapper">
+
+            <input
+                type="number"
+                id="communication"
+                name="communication"
+                min="1"
+                max="10"
+                placeholder="Rate yourself 1-10"
+                required>
+
+            <span>/ 10</span>
+
+        </div>
+
+
+        <label for="technical">
+            Technical Skill
+        </label>
+
+        <div class="input-wrapper">
+
+            <input
+                type="number"
+                id="technical"
+                name="technical"
+                min="1"
+                max="10"
+                placeholder="Rate yourself 1-10"
+                required>
+
+            <span>/ 10</span>
+
+        </div>
+
+
+        <!-- FEATURES -->
+
+        <div class="feature-row">
+
+            <div class="feature">
+                <strong>🤖 AI</strong>
+                ML Prediction
+            </div>
+
+            <div class="feature">
+                <strong>⚡ Fast</strong>
+                Instant Result
+            </div>
+
+            <div class="feature">
+                <strong>📊 Smart</strong>
+                Data Analysis
+            </div>
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="submit"
+            class="predict-btn">
+
+            🚀 Predict My Placement
+
+        </button>
+
+    </form>
+
+
+    <div class="footer">
+        Students Placement Prediction System • Developed by <b>BADAL SINGH</b></a>
+    </div>
+
+</div>
+
+</body>
+</html>
