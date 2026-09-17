@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Prediction Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* ================= RESULT CARD ================= */
+
+        .result-card {
+            text-align: center;
+        }
+
+        .result-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c5cff,
+                    #00d4ff
+                );
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 212, 255, 0.20);
+
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .result-title {
+            font-size: 27px;
+
+            margin-bottom: 8px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #9c8cff,
+                    #00d4ff
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-subtitle {
+            color: #8e96aa;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================= SCORE ================= */
+
+        .score-container {
+
+            width: 200px;
+            height: 200px;
+
+            margin: 10px auto 25px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            background:
+                conic-gradient(
+                    #00d4ff
+                    calc(var(--score) * 1%),
+                    rgba(255,255,255,0.08)
+                    0
+                );
+
+            box-shadow:
+                0 0 45px
+                rgba(0, 212, 255, 0.12);
+        }
+
+
+        .score-container::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 165px;
+            height: 165px;
+
+            border-radius: 50%;
+
+            background: #101522;
+
+            box-shadow:
+                inset 0 0 20px
+                rgba(0,0,0,0.4);
+        }
+
+
+        .score-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+        }
+
+
+        .score-number {
+
+            display: block;
+
+            font-size: 36px;
+
+            font-weight: 800;
+
+            color: white;
+        }
+
+
+        .score-label {
+
+            color: #8e96aa;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= RESULT STATUS ================= */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 18px;
+
+            border-radius: 30px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            margin-bottom: 25px;
+
+            background:
+                rgba(0, 230, 118, 0.10);
+
+            border:
+                1px solid
+                rgba(0, 230, 118, 0.20);
+
+            color: #00e676;
+
+            box-shadow:
+                0 0 20px
+                rgba(0, 230, 118, 0.08);
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #00e676;
+
+            box-shadow:
+                0 0 10px #00e676;
+        }
+
+
+        /* ================= INFO GRID ================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .info-card {
+
+            padding: 14px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            transition: 0.3s;
+        }
+
+
+        .info-card:hover {
+
+            transform: translateY(-3px);
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border-color:
+                rgba(0,212,255,0.20);
+        }
+
+
+        .info-icon {
+
+            font-size: 18px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .info-title {
+
+            font-size: 10px;
+
+            color: #737b91;
+
+            margin-bottom: 4px;
+        }
+
+
+        .info-value {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: white;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+
+            padding: 14px;
+
+            margin-top: 5px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.08),
+                    rgba(0,212,255,0.06)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            color: #9ca4b7;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .again-btn {
+
+            display: block;
+
+            text-decoration: none;
+
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 22px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c5cff,
+                    #00d4ff
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 10px 25px
+                rgba(124,92,255,0.20);
+        }
+
+
+        .again-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,212,255,0.22);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .result-footer {
+
+            margin-top: 18px;
+
+            font-size: 9px;
+
+            color: #5f677b;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 450px) {
+
+            .score-container {
+
+                width: 175px;
+                height: 175px;
+            }
+
+            .score-container::before {
+
+                width: 145px;
+                height: 145px;
+            }
+
+            .score-number {
+
+                font-size: 31px;
+            }
+
+            .result-title {
+
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container result-card">
+
+
+    <!-- ICON -->
+
+    <div class="result-icon">
+        🎯
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1 class="result-title">
+        Prediction Complete
+    </h1>
+
+    <p class="result-subtitle">
+        AI-powered analysis of your placement profile
+    </p>
+
+
+    <!-- SCORE -->
+
+    <div
+        class="score-container"
+        style="--score: {{ probability }};">
+
+        <div class="score-content">
+
+            <span class="score-number">
+                {{ probability }}%
+            </span>
+
+            <span class="score-label">
+                Probability
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="status">
+
+        <span class="status-dot"></span>
+
+        {{ result }}
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🤖
+            </div>
+
+            <div class="info-title">
+                MODEL
+            </div>
+
+            <div class="info-value">
+                Random Forest
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                📊
+            </div>
+
+            <div class="info-title">
+                ANALYSIS
+            </div>
+
+            <div class="info-value">
+                ML Prediction
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ⚡
+            </div>
+
+            <div class="info-title">
+                RESPONSE
+            </div>
+
+            <div class="info-value">
+                Instant
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🎓
+            </div>
+
+            <div class="info-title">
+                SYSTEM
+            </div>
+
+            <div class="info-value">
+                Placement AI
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    <div class="message">
+
+        💡 This prediction is generated from the information
+        entered into the system. Use it as an academic
+        project demonstration, not as a guarantee of actual
+        placement.
+
+    </div>
+
+
+    <!-- AGAIN BUTTON -->
+
+    <a href="/" class="again-btn">
+        🔄 Predict Another Student
+    </a>
+
+
+    <!-- FOOTER -->
+
+    <div class="result-footer">
+
+        Students Placement Prediction System
+        <br>
+        B.Tech IT Mini Project
+
+    </div>
+
+
+</div>
+
+
+<!-- SCORE ANIMATION -->
+
+<script>
+
+    const scoreElement =
+        document.querySelector(".score-container");
+
+    const target =
+        Number("{{ probability }}");
+
+    let current = 0;
+
+    const duration = 1200;
+
+    const start = performance.now();
+
+
+    function animateScore(time) {
+
+        const progress =
+            Math.min((time - start) / duration, 1);
+
+        current =
+            Math.floor(progress * target);
+
+        scoreElement.style.setProperty(
+            "--score",
+            current
+        );
+
+        if (progress < 1) {
+
+            requestAnimationFrame(animateScore);
+
+        } else {
+
+            scoreElement.style.setProperty(
+                "--score",
+                target
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(animateScore);
+
+</script>
+
+
+</body>
+
+</html>
