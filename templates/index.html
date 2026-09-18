@@ -2,365 +2,718 @@
 <html lang="en">
 
 <head>
-    <meta name="google-site-verification" content="hU9WCuaxsE6ZBaqN4vqVT_ysAzQddcmIviq8jVuHhLI" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Placement Predictor</title>
+    <title>Student Placement Predictor</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        .brand {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .brand-icon {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 15px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 18px;
-
-            font-size: 30px;
-
-            background: linear-gradient(
-                135deg,
-                #7c5cff,
-                #00d4ff
-            );
-
-            box-shadow:
-                0 10px 35px rgba(0, 212, 255, 0.2);
-        }
-
-        .brand h1 {
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #a9b0c3;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        .section-title {
-            margin-top: 25px;
-            margin-bottom: 5px;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            color: #ffffff;
-        }
-
-        .section-description {
-            color: #858da2;
-            font-size: 11px;
-            margin-bottom: 10px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper span {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            color: #737b91;
-            font-size: 12px;
-
-            pointer-events: none;
-        }
-
-        .feature-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-
-            margin-top: 22px;
-        }
-
-        .feature {
-            padding: 12px 5px;
-
-            text-align: center;
-
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-
-            background: rgba(255,255,255,0.04);
-
-            font-size: 10px;
-            color: #a9b0c3;
-        }
-
-        .feature strong {
-            display: block;
-
-            color: #ffffff;
-            font-size: 12px;
-
-            margin-bottom: 4px;
-        }
-
-        .predict-btn {
-            letter-spacing: 0.3px;
-        }
-
-        .footer {
-            text-align: center;
-
-            margin-top: 20px;
-
-            font-size: 10px;
-            color: #687086;
-        }
-
-        @media (max-width: 400px) {
-            .feature-row {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- BRAND -->
-    <div class="brand">
+    <!-- ================= HEADER ================= -->
 
-        <div class="brand-icon">
-            🎓
-        </div>
+    <header class="hero">
 
-        <h1>AI Placement Predictor</h1>
+        <div class="logo">🎓</div>
 
-        <p class="subtitle">
-            Predict student placement outcomes using
-            academic performance and skill-based data.
+        <h1>Student Placement Predictor</h1>
+
+        <p>
+            Analyze your placement readiness and discover
+            what you should focus on next.
         </p>
 
-    </div>
-
-
-    <form action="/predict" method="POST">
-
-        <!-- ACADEMIC DETAILS -->
-
-        <div class="section-title">
-            📚 Academic Details
+        <div class="badge">
+            AI-Based Placement Readiness Analysis
         </div>
 
-        <div class="section-description">
-            Enter your academic performance
-        </div>
+    </header>
 
 
-        <label for="cgpa">
-            CGPA
-        </label>
+    <!-- ================= FORM ================= -->
 
-        <div class="input-wrapper">
-            <input
-                type="number"
-                id="cgpa"
-                name="cgpa"
-                min="7"
-                max="10"
-                step="0.01"
-                placeholder="e.g. 9.99"
-                required>
-
-            <span>/ 10</span>
-        </div>
+    <form action="/" method="POST" class="prediction-form">
 
 
-        <label for="tenth">
-            10th Percentage
-        </label>
+        <!-- ================= ACADEMIC ================= -->
 
-        <div class="input-wrapper">
-            <input
-                type="number"
-                id="tenth"
-                name="tenth"
-                min="0"
-                max="100"
-                step="0.01"
-                placeholder="e.g. 99.99"
-                required>
+        <section class="card">
 
-            <span>%</span>
-        </div>
+            <div class="section-title">
 
+                <span>📚</span>
 
-        <label for="twelfth">
-            12th Percentage
-        </label>
+                <div>
+                    <h2>Academic Profile</h2>
+                    <p>Enter your academic performance</p>
+                </div>
 
-        <div class="input-wrapper">
-            <input
-                type="number"
-                id="twelfth"
-                name="twelfth"
-                min="0"
-                max="100"
-                step="0.01"
-                placeholder="e.g. 99.99"
-                required>
-
-            <span>%</span>
-        </div>
-
-
-        <label for="backlogs">
-            Number of Backlogs
-        </label>
-
-        <input
-            type="number"
-            id="backlogs"
-            name="backlogs"
-            min="0"
-            placeholder="e.g. 0"
-            required>
-
-
-        <!-- SKILLS -->
-
-        <div class="section-title">
-            💻 Skills & Experience
-        </div>
-
-        <div class="section-description">
-            Tell us about your practical skills
-        </div>
-
-
-        <label for="internship">
-            Internship Experience
-        </label>
-
-        <select id="internship" name="internship" required>
-
-            <option value="1">
-                ✓ Yes, I have internship experience
-            </option>
-
-            <option value="0">
-                No internship experience
-            </option>
-
-        </select>
-
-
-        <label for="projects">
-            Number of Projects
-        </label>
-
-        <input
-            type="number"
-            id="projects"
-            name="projects"
-            min="0"
-            placeholder="e.g. 3"
-            required>
-
-
-        <label for="communication">
-            Communication Skill
-        </label>
-
-        <div class="input-wrapper">
-
-            <input
-                type="number"
-                id="communication"
-                name="communication"
-                min="1"
-                max="10"
-                placeholder="Rate yourself 1-10"
-                required>
-
-            <span>/ 10</span>
-
-        </div>
-
-
-        <label for="technical">
-            Technical Skill
-        </label>
-
-        <div class="input-wrapper">
-
-            <input
-                type="number"
-                id="technical"
-                name="technical"
-                min="1"
-                max="10"
-                placeholder="Rate yourself 1-10"
-                required>
-
-            <span>/ 10</span>
-
-        </div>
-
-
-        <!-- FEATURES -->
-
-        <div class="feature-row">
-
-            <div class="feature">
-                <strong>🤖 AI</strong>
-                ML Prediction
             </div>
 
-            <div class="feature">
-                <strong>⚡ Fast</strong>
-                Instant Result
+
+            <div class="grid">
+
+                <!-- CGPA -->
+
+                <div class="field">
+
+                    <label for="cgpa">
+                        CGPA
+                    </label>
+
+                    <input
+                        type="number"
+                        id="cgpa"
+                        name="cgpa"
+                        min="0"
+                        max="10"
+                        step="0.01"
+                        placeholder="Example: 8.25"
+                        required>
+
+                    <small>Scale: 0 – 10</small>
+
+                </div>
+
+
+                <!-- 10th -->
+
+                <div class="field">
+
+                    <label for="tenth">
+                        10th Percentage
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tenth"
+                        name="tenth"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Example: 82"
+                        required>
+
+                    <small>Percentage</small>
+
+                </div>
+
+
+                <!-- 12th -->
+
+                <div class="field">
+
+                    <label for="twelfth">
+                        12th Percentage
+                    </label>
+
+                    <input
+                        type="number"
+                        id="twelfth"
+                        name="twelfth"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Example: 78"
+                        required>
+
+                    <small>Percentage</small>
+
+                </div>
+
+
+                <!-- Backlogs -->
+
+                <div class="field">
+
+                    <label for="backlogs">
+                        Backlogs
+                    </label>
+
+                    <input
+                        type="number"
+                        id="backlogs"
+                        name="backlogs"
+                        min="0"
+                        max="20"
+                        value="0"
+                        required>
+
+                    <small>Enter 0 if you have none</small>
+
+                </div>
+
+
+                <!-- Attendance -->
+
+                <div class="field">
+
+                    <label for="attendance">
+                        Attendance
+                    </label>
+
+                    <input
+                        type="number"
+                        id="attendance"
+                        name="attendance"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        placeholder="Example: 85"
+                        required>
+
+                    <small>Percentage</small>
+
+                </div>
+
             </div>
 
-            <div class="feature">
-                <strong>📊 Smart</strong>
-                Data Analysis
+        </section>
+
+
+
+        <!-- ================= SKILLS ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <span>💻</span>
+
+                <div>
+                    <h2>Skills Assessment</h2>
+                    <p>Rate your current skills from 1 to 10</p>
+                </div>
+
             </div>
+
+
+            <div class="grid">
+
+
+                <!-- Coding -->
+
+                <div class="field">
+
+                    <label for="coding">
+                        Coding Skill
+                    </label>
+
+                    <select
+                        id="coding"
+                        name="coding"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">1 — Beginner</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 — Average</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10 — Excellent</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Communication -->
+
+                <div class="field">
+
+                    <label for="communication">
+                        Communication Skill
+                    </label>
+
+                    <select
+                        id="communication"
+                        name="communication"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">1 — Beginner</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 — Average</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10 — Excellent</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Aptitude -->
+
+                <div class="field">
+
+                    <label for="aptitude">
+                        Aptitude Score
+                    </label>
+
+                    <input
+                        type="number"
+                        id="aptitude"
+                        name="aptitude"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        placeholder="Example: 72"
+                        required>
+
+                    <small>Percentage</small>
+
+                </div>
+
+
+                <!-- Technical -->
+
+                <div class="field">
+
+                    <label for="technical">
+                        Technical Skill
+                    </label>
+
+                    <select
+                        id="technical"
+                        name="technical"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">1 — Beginner</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 — Average</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10 — Excellent</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= EXPERIENCE ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <span>🚀</span>
+
+                <div>
+                    <h2>Experience & Projects</h2>
+                    <p>Tell us about your practical experience</p>
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <!-- Projects -->
+
+                <div class="field">
+
+                    <label for="projects">
+                        Number of Projects
+                    </label>
+
+                    <input
+                        type="number"
+                        id="projects"
+                        name="projects"
+                        min="0"
+                        max="30"
+                        value="0"
+                        required>
+
+                    <small>
+                        Include academic & personal projects
+                    </small>
+
+                </div>
+
+
+                <!-- Internship -->
+
+                <div class="field">
+
+                    <label for="internship">
+                        Internship Experience
+                    </label>
+
+                    <select
+                        id="internship"
+                        name="internship"
+                        required>
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Certifications -->
+
+                <div class="field">
+
+                    <label for="certifications">
+                        Certifications
+                    </label>
+
+                    <input
+                        type="number"
+                        id="certifications"
+                        name="certifications"
+                        min="0"
+                        max="30"
+                        value="0"
+                        required>
+
+                    <small>
+                        Number of relevant certifications
+                    </small>
+
+                </div>
+
+
+                <!-- DSA -->
+
+                <div class="field">
+
+                    <label for="dsa">
+                        DSA Level
+                    </label>
+
+                    <select
+                        id="dsa"
+                        name="dsa"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">
+                            Beginner
+                        </option>
+
+                        <option value="2">
+                            Intermediate
+                        </option>
+
+                        <option value="3">
+                            Advanced
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= PLACEMENT PREPARATION ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <span>🎯</span>
+
+                <div>
+                    <h2>Placement Preparation</h2>
+                    <p>Evaluate your interview readiness</p>
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <!-- Resume -->
+
+                <div class="field">
+
+                    <label for="resume">
+                        Resume Score
+                    </label>
+
+                    <select
+                        id="resume"
+                        name="resume"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">
+                            1 — Needs major improvement
+                        </option>
+
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+
+                        <option value="5">
+                            5 — Average
+                        </option>
+
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+
+                        <option value="10">
+                            10 — Excellent
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Mock Interview -->
+
+                <div class="field">
+
+                    <label for="mock">
+                        Mock Interview Score
+                    </label>
+
+                    <input
+                        type="number"
+                        id="mock"
+                        name="mock"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        placeholder="Example: 70"
+                        required>
+
+                    <small>
+                        Percentage
+                    </small>
+
+                </div>
+
+
+                <!-- Leadership -->
+
+                <div class="field">
+
+                    <label for="leadership">
+                        Leadership / Extracurricular
+                    </label>
+
+                    <select
+                        id="leadership"
+                        name="leadership"
+                        required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option value="1">1 — Beginner</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 — Average</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10 — Excellent</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= DISCLAIMER ================= -->
+
+        <div class="notice">
+
+            <strong>ℹ️ Please Note</strong>
+
+            <p>
+                This system provides an educational prediction
+                based on the information you provide. The result
+                is not a guarantee of actual placement.
+            </p>
 
         </div>
 
 
-        <!-- BUTTON -->
+
+        <!-- ================= BUTTON ================= -->
 
         <button
             type="submit"
             class="predict-btn">
 
-            🚀 Predict My Placement
+            <span>🔮</span>
+
+            Analyze My Placement Readiness
+
+            <span>→</span>
 
         </button>
+
 
     </form>
 
 
-    <div class="footer">
-        Students Placement Prediction System • Developed by <a href ="https://www.instagram.com/badalsinghpatel_?stkn=MXU3aG82cjlrdGlrcQ==">Instagram Profile <b>BADAL SINGH</b></a>
-    </div>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            🎓 Student Placement Prediction System
+        </p>
+
+        <span>
+            B.Tech IT Mini Project
+        </span>
+
+    </footer>
 
 </div>
 
+
+
+<!-- ================= VALIDATION ================= -->
+
+<script>
+
+document
+.querySelector(".prediction-form")
+.addEventListener("submit", function(event) {
+
+    const cgpa =
+        parseFloat(
+            document.querySelector('[name="cgpa"]').value
+        );
+
+    const tenth =
+        parseFloat(
+            document.querySelector('[name="tenth"]').value
+        );
+
+    const twelfth =
+        parseFloat(
+            document.querySelector('[name="twelfth"]').value
+        );
+
+    const attendance =
+        parseFloat(
+            document.querySelector('[name="attendance"]').value
+        );
+
+    const aptitude =
+        parseFloat(
+            document.querySelector('[name="aptitude"]').value
+        );
+
+    const mock =
+        parseFloat(
+            document.querySelector('[name="mock"]').value
+        );
+
+
+    if (cgpa < 0 || cgpa > 10) {
+
+        alert("CGPA must be between 0 and 10.");
+
+        event.preventDefault();
+
+        return;
+
+    }
+
+
+    if (
+        tenth < 0 ||
+        tenth > 100 ||
+        twelfth < 0 ||
+        twelfth > 100 ||
+        attendance < 0 ||
+        attendance > 100 ||
+        aptitude < 0 ||
+        aptitude > 100 ||
+        mock < 0 ||
+        mock > 100
+    ) {
+
+        alert(
+            "Please enter valid percentage values between 0 and 100."
+        );
+
+        event.preventDefault();
+
+        return;
+
+    }
+
+});
+
+</script>
+
 </body>
+
 </html>
